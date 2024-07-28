@@ -13,6 +13,10 @@ services:
           action: rebuild
         - path: ./front-end/vite.config.ts
           action: sync+restart
+          target: /app
+        - path: ./front-end/tailwind.config.js
+          action: sync+restart
+          target: /app
         - path: ./front-end
           action: sync
           target: /app
@@ -26,6 +30,6 @@ services:
       watch:
         - path: ./back-end/requirements.txt
           action: rebuild
-        - path: .
+        - path: ./back-end
           action: sync
           target: /app
