@@ -1,13 +1,23 @@
-from datetime import datetime
-from pydantic import BaseModel
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
-class User(BaseModel):
-    name: str
-    uid: str
-    age: int
-    last_login: datetime
+app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-user = User(name="Ming", uid="1234", age=19, last_login=datetime.now())
-print(user.model_dump())
+@app.get("/")
+def root():
+    return {"Hello": "world"}
+
