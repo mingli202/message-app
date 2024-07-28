@@ -1,0 +1,31 @@
+services:
+  frontend:
+    build: ./front-end
+    ports: 
+      - 5173:5173
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - path: ./front-end/package.json
+          action: rebuild
+        - path: ./front-end/package-lock.json
+          action: rebuild
+        - path: ./front-end/vite.config.ts
+          action: sync+restart
+        - path: ./front-end
+          action: sync
+          target: /app
+        
+
+  backend:
+    build: ./back-end
+    ports:
+      - 8000:8000
+    develop:
+      watch:
+        - path: ./back-end/requirements.txt
+          action: rebuild
+        - path: .
+          action: sync
+          target: /app
