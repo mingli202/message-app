@@ -1,5 +1,17 @@
+import { useState } from "react";
+
+import Login from "./Login";
+
 export default function App() {
+  const [state, setState] = useState<"login" | "signup" | "authenticated">(
+    "login",
+  );
+
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center"></div>
+    <>
+      {state === "login" && <Login />}
+      {state === "signup" && <p>Signup</p>}
+      {state === "authenticated" && <p>Authenticated</p>}
+    </>
   );
 }
