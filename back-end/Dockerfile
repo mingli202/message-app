@@ -1,5 +1,7 @@
 FROM python:3.12-alpine
 
+RUN apk add --no-cache gcc musl-dev libpq-dev
+
 WORKDIR /app
 
 COPY requirements.txt .
@@ -7,7 +9,5 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY . .
-
-EXPOSE 8000
 
 CMD ["fastapi", "dev", "src/main.py", "--host", "0.0.0.0"]
