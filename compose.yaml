@@ -23,6 +23,8 @@ services:
         
 
   backend:
+    depends_on:
+      - db
     build: ./back-end
     ports:
       - 8000:8000
@@ -33,3 +35,18 @@ services:
         - path: ./back-end
           action: sync
           target: /app
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./back-end/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5433:5432
+
+volumes:
+  db_data:
